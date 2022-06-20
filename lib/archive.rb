@@ -19,10 +19,6 @@ class Archive
     @name = name
   end
 
-  def set_path(path)
-    @path = path
-  end
-
   def full_name
     "#{@name}#{EXTENSION_FILE}"
   end
