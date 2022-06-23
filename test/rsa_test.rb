@@ -1,5 +1,5 @@
 require 'test/unit'
-require_relative '../lib/RSA'
+require_relative '../lib/rsa'
 
 class RSATest < Test::Unit::TestCase
   def test_is_module
