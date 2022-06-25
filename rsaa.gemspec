@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name        = 'rsaa'
-    s.version     = '0.0.3'
+    s.version     = '0.0.4'
     s.summary     = "Simple implementation of the RSA algorithm"
     s.description = ""
     s.authors     = ["Dayan Freitas"]
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
     s.files       = ["lib/rsa.rb"]
     s.licenses    = ['MIT']
     s.require_paths = ["lib"]
-    s.homepage    = 'https://rubygems.org/gems/rsaa'
+    s.homepage    = 'https://github.com/Dayanfreitas/RSA'
 
     s.files              = Dir.glob('lib/*.rb')
     s.bindir             = %q(bin)
