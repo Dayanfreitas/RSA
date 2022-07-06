@@ -12,12 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: use-ruby ${{ matrix.version }}
+        uses: ./
         with:
-          ruby-version: '3.0.0'
-      - name: Install dependencies
-        run: bundle install
-      - name: Run tests
-        run: ruby test/all_test.rb
+          ruby-version: ${{ matrix.version}}
+
+      - name: ruby version
+        run: ruby -v
+      # - name: Install dependencies
+      #   run: bundle install
+      # - name: Run tests
+      #   run: ruby test/all_test.rb
