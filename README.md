@@ -1,4 +1,21 @@
+# RSA
+Simple implementation gem of the RSA algorithm. Just academic reasons.
 
+## Key generation private and public
+```bash
+# key generation
+RSA.generated 
+```
+## Encode
+```bash
+# encode
+RSA.encode('oi') 
+```
+## Decode
+```bash
+# decode
+RSA.decode(RSA.encode('oi')) 
+```
 
 
 # Development
