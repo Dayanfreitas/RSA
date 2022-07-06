@@ -21,4 +21,10 @@ class Mathematics
     # (i * e) % @totiente_n == 1
     mod(term1, term2) == 1
   end
+
+  def self.func_totiente_n(p, q)
+    # função totiente em n
+    # 𝜑(𝑛) = (𝑝 − 1) ∗ (𝑞 − 1)
+    (p - 1) * (q - 1)
+  end
 end

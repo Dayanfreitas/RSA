@@ -26,16 +26,6 @@ module RSA
       private_key_file.write JSON.generate keys
     end
 
-    def display_keys
-      puts ""
-      puts "==== PRIVATE  KEYS ===="
-      puts @key_p
-      puts @key_q
-      puts @key_d
-      puts @totiente_n
-      puts "=== END PRIVATE KEYS ==="
-    end
-
     private
 
     def generated_p_and_q
@@ -44,9 +34,7 @@ module RSA
     end
 
     def generated_totiente_n
-      # função totiente em n
-      # 𝜑(𝑛) = (𝑝 − 1) ∗ (𝑞 − 1)
-      @totiente_n = (@key_p - 1) * (@key_q - 1)
+      @totiente_n = Mathematics.func_totiente_n(@key_p, @key_q)
     end
 
     def keys
@@ -66,14 +54,6 @@ module RSA
     def create_file_of_keys
       public_key_file = ArchivePublic.new
       public_key_file.write JSON.generate(keys)
-    end
-
-    def display_keys
-      puts ""
-      puts "==== PUBLIC KEYS ===="
-      puts @key_n
-      puts @e
-      puts "== END PUBLIC KEYS =="
     end
 
     private
@@ -110,10 +90,7 @@ module RSA
     private = RSA::Private.new
     public = RSA::Public.new(private: private)
 
-    private.display_keys
     private.create_file_of_keys
-
-    public.display_keys
     public.create_file_of_keys
   end
 
@@ -132,7 +109,7 @@ module RSA
     menssage_encode
   end
 
-  def self.decode(menssage_encode)
+  def self.decode(menssage_encode)  
     archive_private = ArchivePrivate.new
     private_file = archive_private.read
     private_file = JSON.parse(private_file)

@@ -27,4 +27,8 @@ class MathematicsTest < Test::Unit::TestCase
   def test_is_multiplicative_inverse
     assert_true(Mathematics.is_multiplicative_inverse?(235 * 3,352), 'multiplicative inverse')
   end
+
+  def test_func_totiente_n
+    assert_equal((9 * 9),  Mathematics.func_totiente_n(10, 10), 'equals')
+  end
 end
