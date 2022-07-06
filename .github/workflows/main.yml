@@ -22,6 +22,8 @@ jobs:
           bundler-cache: true
 
       - name: Install dependencies
+        env:
+          RAILS_ENV: test
         run: bundle install
 
       - name: Run Tests
