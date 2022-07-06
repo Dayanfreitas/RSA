@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest ]
+        operating-system: [ ubuntu-latest ]
         version: [2.5.x, 2.6, 2.7.x, 3.0]
     steps:
     - name: Checkout
@@ -25,7 +25,7 @@ jobs:
 
     - name: ruby version
       run: ruby -v
-      # - name: Install dependencies
-      #   run: bundle install
-      # - name: Run tests
-      #   run: ruby test/all_test.rb
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: ruby test/all_test.rb
