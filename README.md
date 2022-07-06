@@ -1,3 +1,7 @@
+![example workflow](https://github.com/Dayanfreitas/RSA/actions/workflows/main.yml/badge.svg)
+
+<hr/>
+
 # RSA
 Simple implementation gem of the RSA algorithm. Just academic reasons.
 
