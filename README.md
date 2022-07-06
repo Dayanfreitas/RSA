@@ -32,4 +32,4 @@ RSA.decode(RSA.encode('oi'))
 <hr/>
 
 # To learn more about:  
-* [🔒 RSA implementation algorithm [PT-BR🇧🇷]](doc/rsa_algorithm_pt_br) 
+* [🔒 RSA implementation algorithm [PT-BR🇧🇷]](https://github.com/Dayanfreitas/RSA/blob/master/doc/rsa_algorithm_pt_br.md) 
