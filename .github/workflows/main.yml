@@ -2,30 +2,30 @@ name: Ruby
 
 on:
   push:
-    branches: [ master ]
+    branches: [main]
   pull_request:
-    branches: [ master ]
+    branches: [main]
 
 jobs:
-  run:
-    name: Ruby 
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      matrix:
-        operating-system: [ ubuntu-latest ]
-        version: [2.5.x, 2.6, 2.7.x, 3.0]
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: use-ruby ${{ matrix.version }}
-      uses: ./
-      with:
-        ruby-version: ${{ matrix.version}}
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+          bundler-cache: true
 
-    - name: ruby version
-      run: ruby -v
-    - name: Install dependencies
-      run: bundle install
-    - name: Run tests
-      run: ruby test/all_test.rb
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
+          bundle install --jobs 4 --retry 3
+
+      - name: Run Tests
+        run: |
+          echo pwd
