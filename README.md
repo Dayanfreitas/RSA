@@ -21,7 +21,6 @@ RSA.encode('oi')
 RSA.decode(RSA.encode('oi')) 
 ```
 
-
 # Development
 
 ## init
@@ -29,3 +28,8 @@ RSA.decode(RSA.encode('oi'))
 
 ## run teste
     ruby test/all_test.rb
+
+<hr/>
+
+# To learn more about:  
+* [🔒 RSA implementation algorithm [PT-BR🇧🇷]](doc/rsa_algorithm_pt_br) 
