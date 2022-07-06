@@ -18,13 +18,11 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.2
+          ruby-version: 3.0.4
           bundler-cache: true
 
       - name: Install dependencies
-        run: |
-          sudo apt-get update && sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
-          bundle install --jobs 4 --retry 3
+        run: bundle install
 
       - name: Run Tests
         run: ruby test/all_test.rb
