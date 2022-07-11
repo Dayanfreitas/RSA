@@ -40,14 +40,15 @@ class TextChunk
         return result
     end
 
-    def self.blockSize(n)
-        blockSize = 0
+    def self.block_size(n)
+        block_size = 0
         temp = n - 1
         while temp > 1
             temp = temp / 2
-            blockSize += 1
+            block_size += 1
         end
 
-        return blockSize / 8
+        return block_size / 8
     end
+    
 end
