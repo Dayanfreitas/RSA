@@ -2,6 +2,10 @@ require 'test/unit'
 require_relative '../lib/archive_public'
 
 class ArchivePublicTest < Test::Unit::TestCase
+  def setup
+    RSA.generated
+  end
+
   def test_full_name
     archive_public = ArchivePublic.new
     assert_equal('keys/public.txt', archive_public.full_name, 'private is name of file')
