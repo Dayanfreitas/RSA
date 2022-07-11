@@ -84,7 +84,7 @@ module RSA
 
     def create_file_of_keys
       private_key_file = ArchivePrivate.new
-      private_key_file.write JSON.generate keys
+      private_key_file.write keys
     end
 
     private
@@ -114,7 +114,7 @@ module RSA
 
     def create_file_of_keys
       public_key_file = ArchivePublic.new
-      public_key_file.write JSON.generate(keys)
+      public_key_file.write keys
     end
 
     private
@@ -165,18 +165,17 @@ module RSA
     else
       archive_public = ArchivePublic.new
       file = archive_public.read
-      file = JSON.parse(file)      
-      e = file["e"].to_i
-      n = file["key_n"].to_i
+      e = file[:e].to_i
+      n = file[:key_n].to_i
     end
-
     chunk_size = TextChunk.block_size(n)
     split_in_regex = /.{#{chunk_size}}/
 
     pre_compile = MessageCompile.pre_compile(menssage)
     array_chunk = pre_compile.scan(split_in_regex)
-
-    array_chunk.map { |chunk| TextChunk.new(chunk).to_i.mod_pow(e ,n) }
+    array_chunk.map { |chunk| 
+      TextChunk.new(chunk).to_i.mod_pow(e ,n) 
+    }
   end
 
   def self.decode(menssage_encode)  
@@ -189,10 +188,8 @@ module RSA
     else
       archive_private = ArchivePrivate.new
       private_file = archive_private.read
-      private_file = JSON.parse(private_file)
-
-      d = private_file["key_d"].to_i
-      n = private_file["key_p"].to_i * private_file["key_q"].to_i
+      d = private_file[:key_d].to_i
+      n = private_file[:key_p].to_i * private_file[:key_q].to_i
     end
 
     menssage_decode = menssage_encode.map { |block|
