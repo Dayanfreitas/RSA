@@ -8,12 +8,12 @@ class ArchivePrivate < Archive
 
   def read
     file = File.open full_name
-    decode file.read
+    JSON.parse(decode(file.read), symbolize_names: true)
   end
 
   def write(text)
     file = File.open(full_name, Archive::MODE_WRITE)
-    file.puts encode text
+    file.puts encode JSON.generate text
     file.close
   end
 end

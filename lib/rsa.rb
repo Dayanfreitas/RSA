@@ -5,6 +5,21 @@ require_relative './archive_private'
 require_relative './archive_public'
 require_relative './message_compile'
 
+class Integer
+  def mod_pow(exp, mod)
+    result = 1
+    base = self
+    while exp > 0
+        if (exp & 1) == 1
+           result = (result * base) % mod
+        end
+        exp = exp >> 1
+        base = (base * base) % mod
+    end
+    
+    result
+  end
+end
 
 module RSA
   module OPEN
