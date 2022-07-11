@@ -32,7 +32,7 @@ class TextChunk
     def to_i
         result = 0
 
-        @stringVal.reverse.split('').each{|c|
+        @stringVal.reverse.split('').each{ | c |
             result = result * 256
             result += c.ord
         }
