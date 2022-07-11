@@ -1,9 +1,55 @@
 require 'json'
 require_relative 'mathematics'
+require_relative './text_chunk'
 require_relative './archive_private'
 require_relative './archive_public'
+require_relative './message_compile'
+
 
 module RSA
+  module OPEN
+    
+    class Private
+      attr_accessor :d, :n
+
+      def self.n=(n)
+        @n=n
+      end
+
+      def self.d=(d)
+        @d=d
+      end
+      
+      def self.n
+        @n
+      end
+
+      def self.d
+        @d
+      end
+    end
+
+    class Public
+      attr_accessor :e, :n
+
+      def self.n=(n)
+        @n=n
+      end
+
+      def self.e=(e)
+        @e=e
+      end
+
+      def self.n
+        @n
+      end
+
+      def self.e
+        @e
+      end
+    end
+  end
+
   class Private
     attr_reader :key_p, :key_q, :totiente_n, :key_d
 
@@ -95,33 +141,50 @@ module RSA
   end
 
   def self.encode(menssage)
-    archive_public = ArchivePublic.new
-    file = archive_public.read
-    file = JSON.parse(file)
+    e = nil
+    n = nil
 
-    e = file["e"].to_i
-    n = file["key_n"].to_i
+    if RSA::OPEN::Public.e && RSA::OPEN::Public.n
+      e = RSA::OPEN::Public.e
+      n = RSA::OPEN::Public.n
+    else
+      archive_public = ArchivePublic.new
+      file = archive_public.read
+      file = JSON.parse(file)      
+      e = file["e"].to_i
+      n = file["key_n"].to_i
+    end
 
-    menssage_pre_codify = menssage.bytes
-    menssage_encode = menssage_pre_codify.map { |block|
-      Mathematics.mod(Mathematics.pow(block, e), n)
-    }
-    menssage_encode
+    chunk_size = TextChunk.block_size(n)
+    split_in_regex = /.{#{chunk_size}}/
+
+    pre_compile = MessageCompile.pre_compile(menssage)
+    array_chunk = pre_compile.scan(split_in_regex)
+
+    array_chunk.map { |chunk| TextChunk.new(chunk).to_i.mod_pow(e ,n) }
   end
 
   def self.decode(menssage_encode)  
-    archive_private = ArchivePrivate.new
-    private_file = archive_private.read
-    private_file = JSON.parse(private_file)
+    d = nil
+    n = nil
 
-    d = private_file["key_d"].to_i
-    n = private_file["key_p"].to_i * private_file["key_q"].to_i
+    if RSA::OPEN::Private.d && RSA::OPEN::Private.n
+      d = RSA::OPEN::Private.d
+      n = RSA::OPEN::Private.n
+    else
+      archive_private = ArchivePrivate.new
+      private_file = archive_private.read
+      private_file = JSON.parse(private_file)
+
+      d = private_file["key_d"].to_i
+      n = private_file["key_p"].to_i * private_file["key_q"].to_i
+    end
 
     menssage_decode = menssage_encode.map { |block|
-      Mathematics.mod(Mathematics.pow(block, d), n)
-    }
+      original_chunk = block.to_i.mod_pow(d, n)
+      TextChunk.new(original_chunk).to_s
+    }.join
 
-    menssage_decode
-    menssage_decode.pack('C*').force_encoding('UTF-8')
+    MessageCompile.back_pre_compile(menssage_decode)
   end
 end
