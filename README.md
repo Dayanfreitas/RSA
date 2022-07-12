@@ -25,13 +25,13 @@ RSA.decode(RSA.encode('oi'))
 ```ruby
     ## For encoding
     
-    RSA::OPEN::Public.n=keys[:key_n] = <number>
-    RSA::OPEN::Public.e=keys[:key_e] = <number>
+    RSA::OPEN::Public.n= <number>
+    RSA::OPEN::Public.e= <number>
     RSA.encode('oi')
 
     ## For decoding    
-    RSA::OPEN::Private.n=keys[:key_n] = <number>
-    RSA::OPEN::Private.d=keys[:key_d] = <number>
+    RSA::OPEN::Private.n = <number>
+    RSA::OPEN::Private.d = <number>
     RSA.decode(RSA.encode('oi'))
 ```
 
