@@ -169,7 +169,7 @@ module RSA
       n = file[:key_n].to_i
     end
     chunk_size = TextChunk.block_size(n)
-    split_in_regex = /.{#{chunk_size}}/
+    split_in_regex = /.{1,#{chunk_size}}/
 
     pre_compile = MessageCompile.pre_compile(menssage)
     array_chunk = pre_compile.scan(split_in_regex)
