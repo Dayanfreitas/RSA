@@ -38,7 +38,6 @@ class RSATest < Test::Unit::TestCase
   def test_encode_open
     RSA::OPEN::Public.n = 15212890864824009557
     RSA::OPEN::Public.e = 101
-
     assert_instance_of Array.class, RSA.encode("hello world !").class,  "Mensagem codificada com chaves abertas"
   end
   
@@ -46,6 +45,6 @@ class RSATest < Test::Unit::TestCase
     RSA::OPEN::Private.d = 3163076316033238841
     RSA::OPEN::Private.n = 15212890864824009557
    
-    assert_equal "hello world !", RSA.decode([2352154520049881769, 5108660683496590109]) , "Mensagem decodificada com chaves abertas"
+    assert_equal "hello world !", RSA.decode([2352154520049881769, 5108660683496590109, 1510079240960426942]) , "Mensagem decodificada com chaves abertas"
   end 
 end
