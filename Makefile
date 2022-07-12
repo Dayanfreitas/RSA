@@ -4,10 +4,12 @@ setup:
 	cp file.txt.exemplo file.txt
 
 up:
+	make setup
 	docker-compose up -d
 	make bash
 
 stop:
+	make clean
 	docker-compose stop
 
 bash:
