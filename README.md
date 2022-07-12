@@ -21,6 +21,31 @@ RSA.encode('oi')
 RSA.decode(RSA.encode('oi')) 
 ```
 
+## User keys open
+```ruby
+    ## For encoding
+    
+    RSA::OPEN::Public.n= <number>
+    RSA::OPEN::Public.e= <number>
+    RSA.encode('oi')
+
+    ## For decoding    
+    RSA::OPEN::Private.n = <number>
+    RSA::OPEN::Private.d = <number>
+    RSA.decode(RSA.encode('oi'))
+```
+
+
+## Examples of implementation
+Example folder. Intended for example using this gem
+
+* Simple  
+    Simplest way would be through ```RSA.generated```. That way you will have the keys created in the ```keys``` folder and you can use
+
+* Open keys 
+
+    You can use open keys, for those not generated through ```RSA.generated``` that way you can set externally.
+
 # Development
 
 ## init
@@ -29,7 +54,7 @@ RSA.decode(RSA.encode('oi'))
 ## run teste
     ruby test/all_test.rb
 
-<hr/>
+***
 
 # To learn more about:  
 * [🔒 RSA implementation algorithm [PT-BR🇧🇷]](https://github.com/Dayanfreitas/RSA/blob/master/doc/rsa_algorithm_pt_br.md) 

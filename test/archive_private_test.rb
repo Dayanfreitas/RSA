@@ -19,7 +19,7 @@ class ArchivePrivateTest < Test::Unit::TestCase
 
   def test_write
     archive_private = ArchivePrivate.new
-    archive_private.write( "oi")
+    archive_private.write("oi")
     assert_not_empty(archive_private.read, 'Write in file')
   end
 end
