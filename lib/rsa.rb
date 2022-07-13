@@ -204,5 +204,3 @@ module RSA
     MessageCompile.back_pre_compile(menssage_decode)
   end
 end
-
-RSA.generated_open_keys
