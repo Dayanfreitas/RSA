@@ -3,23 +3,10 @@ require_relative 'mathematics'
 require_relative './text_chunk'
 require_relative './archive_private'
 require_relative './archive_public'
+require_relative './archive_private_open'
+require_relative './archive_public_open'
 require_relative './message_compile'
 
-class Integer
-  def mod_pow(exp, mod)
-    result = 1
-    base = self
-    while exp > 0
-        if (exp & 1) == 1
-           result = (result * base) % mod
-        end
-        exp = exp >> 1
-        base = (base * base) % mod
-    end
-    
-    result
-  end
-end
 
 module RSA
   module OPEN
@@ -87,6 +74,11 @@ module RSA
       private_key_file.write keys
     end
 
+    def create_file(archive)
+      key_n = @key_p * @key_q
+      archive.write [key_n, @key_d]
+    end
+
     private
 
     def generated_p_and_q
@@ -115,6 +107,10 @@ module RSA
     def create_file_of_keys
       public_key_file = ArchivePublic.new
       public_key_file.write keys
+    end
+
+    def create_file(archive)
+      archive.write [@key_n, @e]
     end
 
     private
@@ -155,6 +151,14 @@ module RSA
     public.create_file_of_keys
   end
 
+  def self.generated_open_keys
+    private = RSA::Private.new
+    public = RSA::Public.new(private: private)
+
+    private.create_file(ArchivePrivateOpen.new)
+    public.create_file(ArchivePublicOpen.new)
+  end
+
   def self.encode(menssage)
     e = nil
     n = nil
@@ -174,7 +178,7 @@ module RSA
     pre_compile = MessageCompile.pre_compile(menssage)
     array_chunk = pre_compile.scan(split_in_regex)
     array_chunk.map { |chunk| 
-      TextChunk.new(chunk).to_i.mod_pow(e ,n) 
+      TextChunk.new(chunk).to_i.mod_pow(e, n) 
     }
   end
 
@@ -200,3 +204,5 @@ module RSA
     MessageCompile.back_pre_compile(menssage_decode)
   end
 end
+
+RSA.generated_open_keys

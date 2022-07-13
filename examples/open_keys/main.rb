@@ -16,7 +16,5 @@ p RSA.encode("Hello my friend")
 RSA::OPEN::Private.n=file_private_read[:key_n]
 RSA::OPEN::Private.d=file_private_read[:key_d]
 
-p RSA.decode(
-    RSA.encode("Hello my friend")
-)
+p RSA.decode(RSA.encode("Hello my friend"))
 # => Hello my friend

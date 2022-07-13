@@ -1,11 +1,27 @@
 require 'prime'
 
+class Integer
+  def mod_pow(exp, mod)
+    result = 1
+    base = self
+    while exp > 0
+        if (exp & 1) == 1
+           result = (result * base) % mod
+        end
+        exp = exp >> 1
+        base = (base * base) % mod
+    end
+    
+    result
+  end
+end
+
 class Mathematics
-  LIMIT = 100
-  @number_primes = Prime.take(LIMIT)
+  LIMIT = 10000
+  @number_primes = Prime.each(LIMIT).to_a
 
   def self.random_prime
-    number_random = rand(LIMIT)
+    number_random = rand(@number_primes.length)
     @number_primes[number_random]
   end
 
